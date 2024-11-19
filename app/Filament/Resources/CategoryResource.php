@@ -57,7 +57,7 @@ class CategoryResource extends Resource
                         ->image()
                         ->directory('categories'),
 
-                    Toggle::make('is active')
+                    Toggle::make('is_active')
                         ->required()
                         ->default(true)
 

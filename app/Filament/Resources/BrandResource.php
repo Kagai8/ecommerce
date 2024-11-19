@@ -57,7 +57,7 @@ class BrandResource extends Resource
                         ->image()
                         ->directory('brands'),
 
-                    Toggle::make('is active')
+                    Toggle::make('is_active')
                         ->required()
                         ->default(true)
 
