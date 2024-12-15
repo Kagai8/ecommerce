@@ -19,7 +19,10 @@ class OrderStats extends BaseWidget
 
             Stat::make('Order Shipped', Order::query()->where('status', 'shipped')->count()),
 
-            Stat::make('Average Price', Number::currency(Order::query()->avg('grand_total'), 'KES'))
+            // Check if avg() returns null and use 0 as default
+            Stat::make('Average Price', 
+            Number::currency(Order::query()->avg('grand_total') ?? 0, 'KES')
+            ),
 
         ];
     }
