@@ -63,7 +63,7 @@ class OrderResource extends Resource
 
                         Select::make('payment_method')
                             ->options([
-                                'stripe'=> 'Stripe',
+                                'card'=> 'Card',
                                 'cod' =>  'Cash On Delivery'
                             ])
                             ->required(),
@@ -71,7 +71,7 @@ class OrderResource extends Resource
                         Select::make('payment_status')
                             ->options([
                                 'pending' => 'Pending',
-                                'paid' => 'Paid',
+                                'completed' => 'Completed',
                                 'failed' => 'Failed',
                             ])
                             ->default('pending')

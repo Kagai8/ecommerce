@@ -22,7 +22,7 @@
                                 @error('first_name')
                                 <div class="text-red-500 text-sm">{{ $message }}</div>
                                 @enderror
-                                
+
                             </div>
                             <div>
                                 <label class="block text-gray-700 dark:text-white mb-1" for="last_name">
@@ -107,11 +107,11 @@
                             </label>
                         </li>
                         <li>
-                            <input wire:model='payment_method' class="hidden peer" id="hosting-big"  type="radio" value="stripe">
+                            <input wire:model='payment_method' class="hidden peer" id="hosting-big"  type="radio" value="card">
                             <label class="inline-flex items-center justify-between w-full p-5 text-gray-500 bg-white border border-gray-200 rounded-lg cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 dark:peer-checked:text-blue-500 peer-checked:border-blue-600 peer-checked:text-blue-600 hover:text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700" for="hosting-big">
                                 <div class="block">
                                     <div class="w-full text-lg font-semibold">
-                                        Stripe
+                                        Card/Mobile Money
                                     </div>
                                 </div>
                                 <svg aria-hidden="true" class="w-5 h-5 ms-3 rtl:rotate-180" fill="none" viewbox="0 0 14 10" xmlns="http://www.w3.org/2000/svg">
@@ -120,7 +120,7 @@
                                 </svg>
                             </label>
                             </input>
-                            
+
                         </li>
                     </ul>
                     @error('payment_method')
@@ -170,14 +170,15 @@
                     </hr>
                 </div>
                 <button type="submit" class="bg-green-500 mt-4 w-full p-3 rounded-lg text-lg text-white hover:bg-green-600">
-                    Place Order
+                    <span wire:loading.remove>Place Order</span>
+                    <span wire:loading>Processing...</span>
                 </button>
                 <div class="bg-white mt-4 rounded-xl shadow p-4 sm:p-7 dark:bg-slate-900">
                     <div class="text-xl font-bold underline text-gray-700 dark:text-white mb-2">
                         BASKET SUMMARY
                     </div>
                     <ul class="divide-y divide-gray-200 dark:divide-gray-700" role="list">
-                        
+
                         @foreach($cart_items as $cl)
                         <li class="py-3 sm:py-4">
                             <div class="flex items-center" wire:key='{{ $cl['product_id'] }}'>
@@ -199,7 +200,7 @@
                             </div>
                         </li>
                         @endforeach
-                        
+
                     </ul>
                 </div>
             </div>
