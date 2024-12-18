@@ -18,6 +18,8 @@ use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use App\Filament\Resources\OrderResource\Widgets\OrderStats;
+use Filament\Facades\Filament;
+use Filament\Navigation\NavigationItem;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -56,5 +58,20 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ]);
+    }
+
+    /**
+     * Boot method to register custom navigation items.
+     */
+    public function boot(): void
+    {
+        Filament::serving(function () {
+            Filament::registerNavigationItems([
+                NavigationItem::make('View Website')
+                    ->url('http://127.0.0.1:8000/', shouldOpenInNewTab: true) // Replace with your live website URL
+                    ->icon('heroicon-o-globe-alt') // Optional: Choose an icon
+                    ->sort(999), // Sorts the link to the bottom of the sidebar
+            ]);
+        });
     }
 }

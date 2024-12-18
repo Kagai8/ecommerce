@@ -28,9 +28,7 @@ use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\ViewAction;
-
-
-
+use Filament\Tables\Columns\ImageColumn;
 
 class ProductResource extends Resource
 {
@@ -62,8 +60,8 @@ class ProductResource extends Resource
                         MarkdownEditor::make('description')
                             ->columnSpanFull()
                             ->fileAttachmentsDirectory('products')
-                            
-                            
+
+
                     ])->columns(2),
 
                     Section::make('Images')->schema([
@@ -80,8 +78,18 @@ class ProductResource extends Resource
                         TextInput::make('price')
                             ->numeric()
                             ->required()
-                            ->prefix('KES')
+                            ->prefix('KES'),
+
                     ]),
+
+                    Section::make('Stock')->schema([
+
+                        TextInput::make('stock')
+                        ->numeric()
+                        ->required()
+                        ->label('Stock Quantity'),
+                    ]),
+
                     Section::make('Associations')->schema([
                         Select::make('category_id')
                             ->required()
@@ -106,10 +114,10 @@ class ProductResource extends Resource
 
                         Toggle::make('is_feauture')
                             ->required(),
-                        
+
                         Toggle::make('on_sale')
                             ->required(),
-                                
+
                     ]),
                 ])->columnSpan(1)
             ])->columns(3);
@@ -119,6 +127,11 @@ class ProductResource extends Resource
     {
         return $table
             ->columns([
+                ImageColumn::make('first_image')
+                ->label('Image')
+                ->width(50) // Thumbnail width
+                ->height(50),
+                
                 TextColumn::make('name')
                     ->searchable(),
 
@@ -132,6 +145,11 @@ class ProductResource extends Resource
                 TextColumn::make('price')
                     ->money('KES')
                     ->sortable(),
+
+                TextColumn::make('stock')
+                ->label('Stock')
+                ->sortable()
+                ->toggleable(),
 
                 IconColumn::make('is_feauture')
                     ->boolean(),

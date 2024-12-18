@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -21,6 +22,7 @@ class Product extends Model
         'is_feauture',
         'in_stock',
         'on_sale',
+        'stock',
     ];
 
     protected $casts = [
@@ -41,5 +43,12 @@ class Product extends Model
     {
         return $this->hasMany(OrderItem::class);
     }
-    
+
+    public function getFirstImageAttribute(): ?string
+{
+    return isset($this->images[0])
+        ? asset('storage/' . $this->images[0])
+        : null;
+}
+
 }
