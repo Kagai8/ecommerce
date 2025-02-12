@@ -45,10 +45,25 @@ class Product extends Model
     }
 
     public function getFirstImageAttribute(): ?string
-{
-    return isset($this->images[0])
-        ? asset('storage/' . $this->images[0])
-        : null;
-}
+    {
+        return isset($this->images[0])
+            ? asset('storage/' . $this->images[0])
+            : null;
+    }
+
+    public function saleItems()
+    {
+        return $this->hasMany(SaleItem::class);
+    }
+
+public function reduceStock($quantity)
+    {
+        if ($this->stock >= $quantity) {
+            $this->stock -= $quantity;
+            $this->save();
+        } else {
+            throw new \Exception('Not enough stock available');
+        }
+    }
 
 }
